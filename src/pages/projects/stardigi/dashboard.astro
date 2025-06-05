@@ -1,0 +1,29 @@
+---
+import Layout from '@layout/Standalone.astro';
+---
+
+<Layout>
+    <div>
+        <span id="wasm-output"></span>
+    </div>
+</Layout>
+
+<style lang="scss">
+@use 'sass:math';
+@use '@css/variables' as *;
+</style>
+
+<script>
+    import init, { greeting } from '@lib/wasm/stardigi/StarDigi';
+
+    // Initialize the WASM module and use its exports
+    init().then(() => {
+        const msg = greeting();
+        console.log(msg);
+        // Optionally, display the message in your page:
+        var el = document.querySelector('#wasm-output');
+        if (el) {
+            el.textContent = msg;
+        }
+    });
+</script>

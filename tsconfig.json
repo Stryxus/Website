@@ -15,10 +15,12 @@
     "jsxImportSource": "preact",
     "paths": {
       "@/*": ["src/*"],
+      "@modules/*": ["modules/*"],
       "@public/*": ["public/*"],
       "@assets/*": ["src/assets/*"],
       "@css/*": ["src/styles/*"],
       "@lib/*": ["src/scripts/*"],
+      "@layout/*": ["src/layouts/*"],
       "@comp/*": ["src/components/*"]
     }
   },
