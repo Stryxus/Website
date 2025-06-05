@@ -1,0 +1,3 @@
+[submodule "modules/stardigi"]
+	path = modules/stardigi
+	url = https://github.com/Stryxus/StarDigi
