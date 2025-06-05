@@ -1,29 +1,167 @@
 ---
 import Layout from '@layout/Standalone.astro';
+
+import IMG_Logo from '@public/images/projects/stardigi/logo.svg';
 ---
 
 <Layout>
-    <div>
-        <span id="wasm-output"></span>
+    <div class="w-screen h-screen overflow-hidden flex flex-col">
+        <div id="toolbar" class="h-8 w-full pl-2 pr-2 grid grid-cols-[auto,auto,auto,auto,auto,auto,1fr,auto] bg-gray-800">
+            <!-- Toolbar Button with Dropdown -->
+            <div class="relative dropdown-container">
+                <button class="toolbar-btn h-full w-auto pl-2 pr-2 flex items-center" type="button" data-dropdown="logo">
+                    <img src={IMG_Logo.src} width="24" height="24" alt="StarDigi logo" />
+                </button>
+                <div class="dropdown-menu hidden absolute left-0 mt-1 w-40 bg-white border shadow-lg z-10">
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Visit stryxus.xyz</button>
+                </div>
+            </div>
+
+            <div class="relative dropdown-container">
+                <button class="toolbar-btn h-full w-auto pl-3 pr-3 font-bold" type="button" data-dropdown="stardigi">StarDigi</button>
+                <div class="dropdown-menu hidden absolute left-0 mt-[1px] w-40 bg-white border shadow-lg z-10">
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">About</button>
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Settings</button>
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Github</button>
+                </div>
+            </div>
+
+            <div class="relative dropdown-container">
+                <button class="toolbar-btn h-full w-auto pl-3 pr-3" type="button" data-dropdown="file">File</button>
+                <div class="dropdown-menu hidden absolute left-0 mt-[1px] w-40 bg-white shadow-lg z-10">
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">New</button>
+                    <input id="toolbar-button-open" class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="file" accept=".p4k">Open</input>
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Export...</button>
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Export All</button>
+                </div>
+            </div>
+
+            <div class="relative dropdown-container">
+                <button class="toolbar-btn h-full w-auto pl-3 pr-3" type="button" data-dropdown="edit">Edit</button>
+                <div class="dropdown-menu hidden absolute left-0 mt-[1px] w-40 bg-white shadow-lg z-10">
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Undo</button>
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Redo</button>
+                </div>
+            </div>
+
+            <div class="relative dropdown-container">
+                <button class="toolbar-btn h-full w-auto pl-3 pr-3" type="button" data-dropdown="view">View</button>
+                <div class="dropdown-menu hidden absolute left-0 mt-[1px] w-40 bg-white shadow-lg z-10">
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Zoom In</button>
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Zoom Out</button>
+                </div>
+            </div>
+
+            <div class="relative dropdown-container">
+                <button class="toolbar-btn h-full w-auto pl-3 pr-3" type="button" data-dropdown="help">Help</button>
+                <div class="dropdown-menu hidden absolute left-0 mt-[1px] w-40 bg-white shadow-lg z-10">
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Github Wiki</button>
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">Discord</button>
+                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100" type="button">BlueSky</button>
+                </div>
+            </div>
+
+            <div></div>
+
+            <div class="relative dropdown-container">
+                <button class="toolbar-btn h-full w-auto pl-3 pr-3" type="button">v2025.0.0</button>
+            </div>
+        </div>
+        <div class="flex-1 w-full pl-6 grid grid-cols-[240px,1fr,240px]">
+            <div class="panel"></div>
+            <div id="explorer" class="panel"></div>
+            <div class="panel"></div>
+        </div>
     </div>
 </Layout>
 
 <style lang="scss">
 @use 'sass:math';
 @use '@css/variables' as *;
+
+#toolbar {
+    background-color: white;
+    color: black;
+}
+
+.panel {
+    border: white 1px solid;
+    margin-right: 24px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
 </style>
 
 <script>
-    import init, { greeting } from '@lib/wasm/stardigi/StarDigi';
+    import init, * as wasm from '@lib/wasm/stardigi/StarDigi';
 
-    // Initialize the WASM module and use its exports
-    init().then(() => {
-        const msg = greeting();
-        console.log(msg);
-        // Optionally, display the message in your page:
-        var el = document.querySelector('#wasm-output');
-        if (el) {
-            el.textContent = msg;
+    document.addEventListener('astro:page-load', async () => {
+
+        await init();
+
+        document.querySelectorAll<HTMLButtonElement>('.toolbar-btn').forEach(btn => {
+            btn.addEventListener('click', function(e: MouseEvent) {
+                e.stopPropagation();
+                const container = (e.currentTarget as HTMLElement).parentElement;
+                const dropdown = container?.querySelector<HTMLDivElement>('.dropdown-menu');
+                const isOpen = dropdown && !dropdown.classList.contains('hidden');
+                closeAllDropdowns();
+                if (dropdown && !isOpen) {
+                    dropdown.classList.remove('hidden');
+                }
+            });
+        });
+
+        document.addEventListener('click', () => {
+            closeAllDropdowns();
+        });
+
+        document.querySelectorAll<HTMLDivElement>('.dropdown-menu').forEach(menu => {
+            menu.querySelectorAll<HTMLButtonElement>('button').forEach(option => {
+                option.addEventListener('click', () => {
+                    closeAllDropdowns();
+                });
+            });
+        });
+
+        const openInputButton: HTMLInputElement | null = document.querySelector('#toolbar-button-open');
+        if (openInputButton) {
+            openInputButton.addEventListener('change', async (event) => {
+                try {
+                    const input = event.target as HTMLInputElement;
+                    const file = input.files?.[0];
+                    if (!file) return;
+
+                    // Read file as array buffer
+                    const arrayBuffer = await file.arrayBuffer();
+                    const uint8Array = new Uint8Array(arrayBuffer);
+
+                    // Clear previous entries
+                    const explorer = document.querySelector('#explorer');
+
+                    // Define the callback that will be called for each file entry
+                    const fileCallback = (fileInfo: any) => {
+                        // fileInfo is a JS object with .name and .size (and any other metadata you added)
+                        const entry = document.createElement('p');
+                        entry.innerText = `${fileInfo.name} (${fileInfo.size} bytes)`;
+                        explorer?.appendChild(entry);
+                    };
+
+                    // Call WASM function, passing the callback
+                    // @ts-ignore: WASM function is dynamically generated by wasm-bindgen
+                    await wasm.list_p4k_files(uint8Array, fileCallback);
+
+                } catch (err) {
+                    console.error('Error reading or processing file:', err);
+                    alert('Failed to read or process the file. See console for details.');
+                }
+            });
         }
     });
+
+    function closeAllDropdowns() {
+        document.querySelectorAll<HTMLDivElement>('.dropdown-menu').forEach(menu => {
+            menu.classList.add('hidden');
+        });
+    }
 </script>
