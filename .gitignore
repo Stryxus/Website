@@ -134,4 +134,6 @@ dist
 /public
 *.DS_Store
 *.afphoto
+*.afphoto~lock~
 *.afdesign
+*.afdesign~lock~
