@@ -1,0 +1,36 @@
+---
+import '@css/global.scss';
+
+import CommonHeader from '@comp/framework/CommonHeader.astro';
+---
+
+<!doctype html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+	<head>
+		<CommonHeader />
+	</head>
+	<body>
+		<main>
+			<slot />
+		</main>
+	</body>
+</html>
+
+<style lang="scss">
+@use 'sass:math';
+@use '@css/variables' as *;
+</style>
+
+<script>
+import { updateMediaQueries } from '@lib/client/mediaQueries';
+
+window.addEventListener('resize', updateMediaQueries);
+
+document.addEventListener('DOMContentLoaded', () => {
+	updateMediaQueries();
+});
+
+document.addEventListener('astro:after-swap', () => {
+	updateMediaQueries();
+});
+</script>

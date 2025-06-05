@@ -1,0 +1,34 @@
+{
+  "name": "website",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "NODE_ENV=development bun run server.ts",
+    "dev:watch": "tsx modules/webtools/astro_opt.ts",
+    "build": "bunx --bun astro check && astro build",
+    "preview": "bunx --bun astro preview",
+    "prod:start": "NODE_ENV=production bun run dist/server/server.js"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.3.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "@astropub/code": "^0.4.2",
+    "@nurodev/astro-bun": "^2.0.5",
+    "astro": "^5.9.0",
+    "astro-compressor": "^1.0.0",
+    "astro-purgecss": "^5.2.2",
+    "chartist": "^1.3.1",
+    "dotenv": "^16.5.0",
+    "lite-youtube-embed": "^0.3.3",
+    "typescript": "^5.8.3",
+    "vite-plugin-top-level-await": "^1.5.0",
+    "vite-plugin-wasm": "^3.4.1"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.15",
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.0.7",
+    "sass": "^1.89.1"
+  }
+}

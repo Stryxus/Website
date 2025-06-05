@@ -1,0 +1,46 @@
+---
+import '@css/global.scss';
+
+import { fade } from 'astro:transitions';
+
+import CommonHeader from '@comp/framework/CommonHeader.astro';
+import Navigator from '@comp/framework/Navigator.astro';
+import Footer from '@comp/framework/Footer.astro';
+---
+
+<!doctype html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+	<head>
+		<CommonHeader />
+	</head>
+	<body>
+		<Navigator transition:persist />
+		<main transition:animate={fade({ duration: '0.6s' })}>
+			<slot />
+		</main>
+		<Footer transition:persist />
+	</body>
+</html>
+
+<style lang="scss">
+@use 'sass:math';
+@use '@css/variables' as *;
+
+main {
+	z-index: 2;
+}
+</style>
+
+<script>
+import { updateMediaQueries } from '@lib/client/mediaQueries';
+
+window.addEventListener('resize', updateMediaQueries);
+
+document.addEventListener('astro:after-preparation', () => {
+	updateMediaQueries();
+});
+
+document.addEventListener('astro:after-swap', () => {
+	updateMediaQueries();
+});
+</script>

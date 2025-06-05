@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Default.astro';
+
+import IMG_Avatar from '@public/images/avatar.avif';
+---
+
+<Layout>
+    <div class="page topper-f-screen">
+        <div id="welcome">
+            <div id="welcome-inner" class="grid grid-cols-[1fr_auto_1fr]">
+                <div class="md:block hidden w-fit text-right justify-self-end">
+                    <p>Autodidact</p>
+                    <p>Full-Stack Software Engineer</p>
+                    <p>Photography & Virtual Photographer</p>
+                    <hr>
+                    <p>Arch-Jonin 'Ghost' of The BHxG Black Dragon Shinobi</p>
+                    <p>Enthusiast of the Blade, Sniper Rifle & Pistol</p>
+                    <p>The Verse's Grim Reaper</p>
+                </div>
+                <h1 id="tategaki-stryxus" class="tategaki justify-self-center">ストリクサス</h1>
+                <img id="avatar" class="object-cover object-top -mt-4 justify-self-start" src={IMG_Avatar.src} alt="Stryxus' avatar" decoding="async" loading="lazy" draggable="false" />
+            </div>
+        </div>
+        <div id="aboutme" class="grid grid-cols-[1fr_auto_1fr]">
+
+        </div>
+    </div>
+</Layout>
+
+<style lang="scss">
+@use 'sass:math';
+@use '@css/variables' as *;
+
+#welcome {
+
+    #welcome-inner {
+        padding-top: #{$navigatorFullHeight + px};
+
+        hr {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        #avatar {
+            height: calc(100vh - #{$navigatorSpacing + px} + #{$dividerSize * 2 + px});
+            animation: stryxusAvatarFadeIn 3s ease-out;
+        }
+    }
+}
+
+#aboutme {
+
+}
+
+@keyframes stryxusAvatarFadeIn {
+    from {
+        opacity: 0;
+        filter: brightness(0) contrast(5) blur(24px);
+    }
+
+    to {
+        opacity: 1;
+        filter: brightness(1) contrast(1) blur(0px);
+    }
+}
+</style>
+
+<script>
+import TategakiTextAnimator from '@lib/client/tategakiTextAnimator';
+
+let tategakiAnimatorInterval: number;
+
+document.addEventListener('astro:page-load', () => {
+    const animator = new TategakiTextAnimator('#tategaki-stryxus', 'Stryxus', 'ストリクサス', 'HACKED', 1.5, 1.5, 8000, 0.1);
+    tategakiAnimatorInterval = animator.start() as number;
+});
+
+document.addEventListener('astro:before-swap', () => {
+    clearInterval(tategakiAnimatorInterval);
+});
+</script>

@@ -1,0 +1,41 @@
+---
+import SVG_fa_person_digging from '@assets/icons/fa/person-digging-solid.svg';
+---
+
+<div id="under-construction" class="flex justify-center items-center h-screen">
+    <SVG_fa_person_digging />
+    <div>
+        <h1>Under Construction.</h1>
+        <p>This page is under construction.</p>
+        <p>Check back soon™️!</p>
+    </div>
+</div>
+
+<style lang="scss">
+@use 'sass:math';
+@use '@css/variables' as *;
+
+#under-construction {
+    svg {
+        padding-right: 50px;
+        width: 200px;
+        height: 200px;
+        fill: white;
+        border-right: 1px white solid;
+    }
+
+    h1 {
+        padding-left: 50px;
+        margin-bottom: 16px;
+        border-bottom: 1px white solid;
+    }
+
+    p {
+        padding-left: 50px;
+    }
+}
+</style>
+
+<script>
+
+</script>

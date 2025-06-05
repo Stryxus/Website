@@ -1,0 +1,28 @@
+
+$blur: 24px;
+$transparency: 0.45;
+
+$dividerSize: 12;
+$navigatorHeight: 92; // px
+$navigatorSpacing: 50; // px
+$navigatorFullHeight: $navigatorHeight + ($navigatorSpacing * 2); // px
+
+// Colours
+$black: rgb(10, 10, 10);
+$grey1: rgb(50, 50, 50);
+$grey2: rgb(75, 75, 75);
+$grey3: rgb(100, 100, 100);
+$grey4: rgb(125, 125, 125);
+$grey5: rgb(150, 150, 150);
+$grey6: rgb(175, 175, 175);
+$grey7: rgb(200, 200, 200);
+$grey8: rgb(225, 225, 225);
+$white: rgb(249, 249, 249);
+
+$lightestgreen: rgb(210, 255, 38);
+$lightergreen: rgb(172, 255, 0);
+$lightgreen: rgb(134, 217, 0);
+$green: rgb(96, 179, 0);
+$darkgreen: rgb(57, 140, 0);
+$darkergreen: rgb(19, 102, 0);
+$darkestgreen: rgb(0, 64, 0);

@@ -1,0 +1,73 @@
+@use 'tailwindcss/base';
+@use 'tailwindcss/components';
+@use 'tailwindcss/utilities';
+
+@use 'variables' as *;
+@use 'fonts' as *;
+@use 'baseElements' as *;
+
+.page {
+    width: inherit;
+
+    &.nav-padding {
+        padding-top: #{$navigatorFullHeight + px};
+    }
+}
+
+.divider {
+    $shiftPosition: 38%;
+	clip-path: polygon(0% 0%, calc($shiftPosition - #{$dividerSize + px}) 0%, calc($shiftPosition + #{$dividerSize + px}) calc(100% - #{$dividerSize + px}), 100% calc(100% - #{$dividerSize + px}), 100% 100%, calc($shiftPosition + #{$dividerSize + px}) 100%, calc($shiftPosition - #{$dividerSize + px}) #{$dividerSize + px}, 0% #{$dividerSize + px});
+    background-color: $green;
+    height: #{$dividerSize * 3 + px};
+    border-top: black double;
+    border-bottom: black double;
+    border-left: none;
+    border-right: none;
+    border-width: #{$dividerSize + px};
+}
+
+.section {
+	margin: 0px auto;
+
+    h1, h2 {
+		display: inline-block;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-left: 22px;
+        padding-right: 22px;
+        color: $green;
+	}
+
+    h1 {
+		font-size: 32px;
+	}
+
+    .content {
+		padding: 36px;
+
+        small {
+			position: absolute;
+            top: 10px;
+            left: 24px;
+		}
+
+        h2 {
+			font-size: 24px;
+            margin-bottom: 8px;
+		}
+
+        ul {
+			margin-left: 40px;
+            list-style-type: square;
+            li {
+				margin-bottom: 8px;
+			}
+		}
+	}
+}
+
+.tategaki {
+    font-family: 'GL-NovantiquaMinamoto';
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}

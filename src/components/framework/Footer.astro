@@ -1,0 +1,95 @@
+---
+import SVG_fa_bluesky_brands_solid from '@assets/icons/fa/bluesky-brands-solid.svg';
+import SVG_fa_github_brands_solid from '@assets/icons/fa/github-brands-solid.svg';
+import SVG_fa_youtube_brands_solid from '@assets/icons/fa/youtube-brands-solid.svg';
+---
+
+<footer class="flex flex-col md:flex-row w-full">
+    <div class="side-container justify-center content-center w-screen md:w-56">
+        <p>© {new Date().getFullYear()} Stryxus</p>
+    </div>
+    <div class="flex-grow flex justify-center content-center">
+        <div class="link-container">
+            <a rel="noopener noreferrer nofollow" target="_blank" href="https://bsky.app/profile/stryxus.xyz" draggable="false">
+                <SVG_fa_bluesky_brands_solid />
+            </a>
+        </div>
+        <div class="link-container">
+            <a rel="noopener noreferrer nofollow" target="_blank" href="https://github.com/Stryxus" draggable="false">
+                <SVG_fa_github_brands_solid />
+            </a>
+        </div>
+        <div class="link-container">
+            <a rel="noopener noreferrer nofollow" target="_blank" href="https://www.youtube.com/@StryxusVideos" draggable="false">
+                <SVG_fa_youtube_brands_solid />
+            </a>
+        </div>
+    </div>
+    <div class="side-container justify-center content-center w-screen md:w-56">
+        <button draggable="false">
+            <p>About this website</p>
+        </button>
+    </div>
+</footer>
+
+<style lang="scss">
+@use 'sass:math';
+@use '@css/variables' as *;
+
+footer {
+    background-color: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur($blur);
+    height: 64px;
+    user-select: none;
+    z-index: 1;
+
+    .link-container, .side-container {
+        line-height: 64px;
+
+        & > * {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+    }
+
+    .link-container {
+        width: 64px;
+        padding: 20px;
+
+        a {
+            padding: 0px;
+
+            &:hover {
+                color: $green;
+            }
+
+            svg {
+                width: 100%;
+                height: 100%;
+                fill: white;
+            }
+        }
+    }
+
+    .side-container {
+        text-align: center;
+
+        p, button {
+            padding: 0px;
+        }
+
+        button {
+
+            &:hover {
+                background-color: $green;
+                color: black;
+            }
+        }
+    }
+}
+</style>
+
+<script>
+
+</script>

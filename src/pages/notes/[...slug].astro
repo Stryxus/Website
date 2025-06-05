@@ -1,0 +1,33 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Default.astro";
+
+interface Props {
+	entry: CollectionEntry<"notes">;
+}
+
+export async function getStaticPaths() {
+	const notesEntries = await getCollection("notes");
+	return notesEntries.map((entry: any) => ({
+		params: { slug: entry.slug }, props: { entry },
+	}));
+}
+
+const { entry } = Astro.props as Props;
+const { Content } = await entry.render();
+---
+
+<Layout>
+	<h1>{entry.data.title}</h1>
+	<p>Published on: {entry.data.pubDate.toDateString()}</p>
+	<Content />
+</Layout>
+
+<style lang="scss">
+@use 'sass:math';
+@use '@css/variables' as *;
+</style>
+
+<script>
+	
+</script>

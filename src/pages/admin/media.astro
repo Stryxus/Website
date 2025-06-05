@@ -1,0 +1,107 @@
+---
+import Layout from '@/layouts/Standalone.astro';
+---
+
+<Layout>
+    <h1>Secure File Upload</h1>
+    <form id="uploadForm">
+        <div class="form-group">
+            <label for="fileInput">Select .avif files:</label>
+            <input type="file" id="fileInput" accept=".avif" multiple required>
+        </div>
+        <div id="fileMetadata"></div>
+        <button type="submit">Upload</button>
+    </form>
+</Layout>
+
+<style lang="scss">
+    form {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    input[type="file"],
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        cursor: pointer;
+        &:hover {
+            background-color: #45a049;
+        }
+    }
+</style>
+
+<script>
+const form = document.getElementById('uploadForm') as HTMLFormElement;
+const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+const fileMetadata = document.getElementById('fileMetadata');
+
+fileInput.addEventListener('change', () => {
+    if (fileInput.files && fileMetadata) {
+        fileMetadata.innerHTML = '';
+        Array.from(fileInput.files).forEach((file, index) => {
+            fileMetadata.innerHTML += `
+                <div class="file-metadata">
+                    <h3>File ${index + 1}: ${file.name}</h3>
+                    <input type="text" name="title-${index}" placeholder="Title" required>
+                    <textarea name="description-${index}" placeholder="Description" required></textarea>
+                </div>
+            `;
+        });
+    }
+});
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    if (fileInput.files) {
+        Array.from(fileInput.files).forEach((file, index) => {
+            formData.append(`file-${index}`, file);
+            formData.append(`title-${index}`, (document.querySelector(`[name="title-${index}"]`) as HTMLInputElement).value);
+            formData.append(`description-${index}`, (document.querySelector(`[name="description-${index}"]`) as HTMLTextAreaElement).value);
+        });
+    }
+
+    if (fileMetadata) {
+        try {
+            const response = await fetch('/upload', {
+                method: 'POST',
+                headers: {
+                    'X-SSH-Key': 'YOUR_SSH_PUBLIC_KEY_HERE'
+                },
+                body: formData
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('Files uploaded successfully');
+                form.reset();
+                fileMetadata.innerHTML = '';
+            } else {
+                alert('Upload failed');
+            }
+        } catch (error) {
+            console.error('Upload error:', error);
+            alert('Upload failed');
+        }
+    }
+});
+</script>

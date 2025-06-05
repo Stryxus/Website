@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Default.astro";
+
+const notes = await getCollection("notes");
+---
+
+<Layout>
+    <div class="page container-fluid">
+        <div class="row">
+            <div class="col">
+                <ul>
+                    {notes.map((post: any) => (
+                        <li>
+                            <a href={`/notes/${post.slug}/`}>{post.data.title}</a>
+                            <p>Published on: {post.data.pubDate.toDateString()}</p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style lang="scss">
+@use 'sass:math';
+@use '@css/variables' as *;
+</style>
+
+<script>
+
+</script>
